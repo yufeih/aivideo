@@ -258,3 +258,11 @@ If you're not going to continue to use this application, you can delete the cont
    The process to delete the resource group could take a few minutes to complete.
 
 ---
+
+```json
+{
+  "type": "click",
+  "transcript": "Next, let's proceed by selecting 'Create new' to set up a new resource group. This will allow us to group all related resources together.",
+  "label": "Create new"
+}
+```
