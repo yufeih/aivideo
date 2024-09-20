@@ -7,8 +7,10 @@ The output MUST be in JSON format confirming to this TypeScript schema:
 type HtmlAction = {
   type: "click" | "input";
   transcript: string;
+  /** ID of the target HTML element to perform the action */
+  id?: string;
   /** aria-label of the target HTML element to perform the action */
-  label?: string;
+  ariaLabel?: string;
   /** href of the target HTML element to perform the action */
   href?: string;
   /** Text to type if action type is 'input' */

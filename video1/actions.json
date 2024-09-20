@@ -1,0 +1,61 @@
+[
+    {
+        "type": "input",
+        "transcript": "To begin, let's search for 'Container Apps' in the search bar. Start by typing 'Container Apps' into the search field at the top of the portal.",
+        "ariaLabel": "Search resources, services, and docs (G+/)",
+        "text": "Container Apps"
+    },
+    {
+        "type": "click",
+        "transcript": "Now, let's select 'Container Apps' from the search results to move forward with creating the container app. Click on 'Container Apps' in the list of search results.",
+        "ariaLabel": "Container Apps"
+    },
+    {
+        "type": "click",
+        "transcript": "Now, let's move forward by clicking the 'Create' button to start setting up your container app. This will take us to the 'Basics' tab where we'll begin entering the necessary details.",
+        "ariaLabel": "Create"
+    },
+    {
+        "type": "input",
+        "transcript": "Next, we need to enter the name for our container app. Type 'my-container-app' into the 'Container app name' field.",
+        "ariaLabel": "Container app name",
+        "text": "my-container-app"
+    },
+    {
+        "type": "click",
+        "transcript": "Next, let's proceed by selecting 'Create new' to set up a new resource group. This will allow us to group all related resources together.",
+        "ariaLabel": "Create new"
+    },
+    {
+        "type": "input",
+        "transcript": "Now, let's create a new resource group. In the 'Name' field, type 'my-container-apps' to group all related resources under this new group.",
+        "ariaLabel": "Name",
+        "text": "my-container-apps"
+    },
+    {
+        "type": "click",
+        "transcript": "Next, let's move on by selecting the 'Container' tab to configure the container settings for our app. Click the 'Container' tab at the top of the page.",
+        "id": "Pivot3-Tab1"
+    },
+    {
+        "type": "click",
+        "transcript": "Next, let's select 'Use quickstart image' to use a pre-built container image for quick deployment. Click the checkbox labeled 'Use quickstart image'.",
+        "id": "checkbox-53",
+        "ariaLabel": "Use quickstart image"
+    },
+    {
+      "type": "click",
+      "transcript": "Next, let's proceed by clicking the 'Review + create' tab to review the configuration settings before deployment. Click the 'Review + create' button at the top.",
+      "id": "Pivot3-Tab4"
+    },
+    {
+      "type": "click",
+      "transcript": "Now, let's finalize the creation of the container app by clicking the 'Create' button. This will deploy the app and display a confirmation message once the deployment is complete.",
+      "id": "id__131"
+    },
+    {
+      "type": "click",
+      "transcript": "Next, let's select the 'Go to resource' button to view your newly created container app. This will take you to the details page of your container app, where you can see more information and access its features.",
+      "id": "id__52"
+    }
+]

@@ -1,23 +1,32 @@
-const { readFileSync, writeFileSync } = require("fs");
+const { readFileSync, writeFileSync, existsSync } = require("fs");
 const { JSDOM } = require("jsdom");
 
-const extractTags = ['input', 'button', 'a', 'label', 'select', 'textarea']
-const tagsToRemove = ['style', 'script', 'link', 'svg', 'meta', 'head', 'noscript', 'img']
-const attrToKeep = ['aria-label', 'placeholder', 'href', 'disabled']
-const emptyTagsToKeep = ['input', 'a', 'button']
+const extractTags = ["input", "button", "a", "label", "select", "textarea"];
+const tagsToRemove = [
+  "style",
+  "script",
+  "link",
+  "svg",
+  "meta",
+  "head",
+  "noscript",
+  "img",
+];
+const attrToKeep = ["aria-label", "placeholder", "href", "disabled", "id"];
+const emptyTagsToKeep = ["input", "a", "button"];
 
 function cleanHtml(html) {
   const dom = new JSDOM(html);
   const document = dom.window.document;
-  
+
   // Remove specified tags
-  document.querySelectorAll(tagsToRemove.join(',')).forEach((node) => {
+  document.querySelectorAll(tagsToRemove.join(",")).forEach((node) => {
     node.remove();
   });
 
   // Remove all attributes except those in attrToKeep
-  document.querySelectorAll('*').forEach((node) => {
-    [...node.attributes].forEach(attr => {
+  document.querySelectorAll("*").forEach((node) => {
+    [...node.attributes].forEach((attr) => {
       if (!attrToKeep.includes(attr.name)) {
         node.removeAttribute(attr.name);
       }
@@ -27,9 +36,13 @@ function cleanHtml(html) {
   // Recursively remove empty tags except those in emptyTagsToKeep
   function removeEmptyTags(element) {
     const children = Array.from(element.children);
-    children.forEach(child => {
+    children.forEach((child) => {
       removeEmptyTags(child);
-      if (!emptyTagsToKeep.includes(child.tagName.toLowerCase()) && !child.hasChildNodes() && !child.textContent.trim()) {
+      if (
+        !emptyTagsToKeep.includes(child.tagName.toLowerCase()) &&
+        !child.hasChildNodes() &&
+        !child.textContent.trim()
+      ) {
         child.remove();
       }
     });
@@ -39,39 +52,48 @@ function cleanHtml(html) {
 
   //return document.body.innerHTML.replace(/<!--[\s\S]*?-->/g, '');
 
-
   let concatenatedInnerHtml = "";
 
   extractTags.forEach((tag) => {
     const elements = document.querySelectorAll(tag);
     elements.forEach((element) => {
-        if (element.getAttribute("disabled") !== null) {
-            return
-        }
-      concatenatedInnerHtml += element.outerHTML.replace(/<!--[\s\S]*?-->/g, '') + '\n';
+      if (element.getAttribute("disabled") !== null) {
+        return;
+      }
+      concatenatedInnerHtml +=
+        element.outerHTML.replace(/<!--[\s\S]*?-->/g, "") + "\n";
     });
   });
 
-  return concatenatedInnerHtml.replace(/<div>/g, '').replace(/<span>/g, '').replace(/<\/div>/g, '').replace(/<\/span>/g, '');
+  return concatenatedInnerHtml
+    .replace(/<div>/g, "")
+    .replace(/<span>/g, "")
+    .replace(/<\/div>/g, "")
+    .replace(/<\/span>/g, "");
 }
 
-writeFileSync(
-    './video1/html-input-1.html',
-    cleanHtml(readFileSync("./video1/html-raw-1.html").toString()));
-
-writeFileSync(
-    './video1/html-input-2.html',
-    cleanHtml(readFileSync("./video1/html-raw-2.html").toString()));
-
-writeFileSync(
-    './video1/html-input-3.html',
-    cleanHtml(readFileSync("./video1/html-raw-3.html").toString()));
-    
-writeFileSync(
-    './video1/html-input-4.html',
-    cleanHtml(readFileSync("./video1/html-raw-4.html").toString()));
-    
-writeFileSync(
-    './video1/html-input-5.html',
-    cleanHtml(readFileSync("./video1/html-raw-5.html").toString()));
-    
+for (let i = 1; i <= 20; i++) {
+  if (!existsSync(`./video1/step${i}.md`) && existsSync(`./video1/html-raw-${i}.html`)) {
+    writeFileSync(
+      `./video1/html-input-${i}.html`,
+      cleanHtml(readFileSync(`./video1/html-raw-${i}.html`).toString())
+    );
+    writeFileSync(
+      `./video1/step${i}.md`,
+      readFileSync("./prompt.md")
+        .toString()
+        .replace(
+          "{{ADD CURRENT HTML STATE HERE}}",
+          readFileSync(`./video1/html-input-${i}.html`)
+        )
+        .replace(
+          "{{ADD TUTORIAL CONTENT HERE}}",
+          readFileSync(`./video1/tutorial.md`)
+        )
+        .replace(
+          "{{ADD PREVIOUS ACTIONS HERE}}",
+          readFileSync(`./video1/actions.json`)
+        )
+    );
+  }
+}
